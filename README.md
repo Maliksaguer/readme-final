@@ -1,26 +1,31 @@
-# Nom du Projet
+# Gestion des Réservations de Logements
 
-Une brève phrase accrocheuse décrivant votre projet.
+Ce projet est une application web en PHP permettant aux utilisateurs de réserver des logements en ligne.
 
-## 📌 Description
+## Fonctionnalités
 
-Ce projet a pour objectif de .  
-Il permet de résoudre .  
-Fonctionnalités principales :
-- Fonctionnalité 1
-- Fonctionnalité 2
-- Fonctionnalité 3
+- Ajouter une réservation pour un logement disponible.
+- Vérification de la disponibilité des logements entre deux dates.
+- Validation des données côté client (JavaScript).
+- Interface utilisateur responsive.
 
-## 🗂 Table des matières
+## Technologies utilisées
 
-- [Installation](#installation)
-- [Utilisation](#utilisation)
-- [Contribution](#contribution)
-- [Licence](#licence)
+- **Frontend** :
+  - HTML5, CSS3
+  - JavaScript
+  - Typicons (icônes)
 
-## 🔧 Installation
+- **Backend** :
+  - PHP 
+  - PDO pour l'accès à la base de données
 
-1. Clonez le repository :
-   ```bash
-   git clone https://github.com/nom-utilisateur/nom-du-projet.git
-   cd nom-du-projet
+- **Base de données** :
+  - MySQL
+
+## Installation
+
+1. Cloner le dépôt :
+
+```bash
+git clone https://github.com/votre-utilisateur/votre-projet.git
