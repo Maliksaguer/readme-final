@@ -127,61 +127,92 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                   <h3 class="text-purple mb-4 text-center">Ajouter un logement</h3>
 
-                  <form method="POST" enctype="multipart/form-data" class="form-section">
-                    <div class="form-group">
-                      <label for="titre">Titre</label>
-                      <input type="text" class="form-control" id="titre" name="titre" required>
-                    </div>
+                    <form method="POST" enctype="multipart/form-data" class="form-section" id="addLogementForm">
+                        <div class="form-group">
+                            <label for="titre">Titre</label>
+                            <input type="text" class="form-control" id="titre" name="titre" required minlength="3" maxlength="100" />
+                        </div>
 
-                    <div class="form-group">
-                      <label for="description">Description</label>
-                      <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
-                    </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="4" required minlength="10" maxlength="1000"></textarea>
+                        </div>
 
-                    <div class="form-group">
-                      <label for="adresse">Adresse</label>
-                      <input type="text" class="form-control" id="adresse" name="adresse" required>
-                    </div>
+                        <div class="form-group">
+                            <label for="adresse">Adresse</label>
+                            <input type="text" class="form-control" id="adresse" name="adresse" required maxlength="255" />
+                        </div>
 
-                    <div class="form-group">
-                      <label for="ville">Ville</label>
-                      <input type="text" class="form-control" id="ville" name="ville" required>
-                    </div>
+                        <div class="form-group">
+                            <label for="ville">Ville</label>
+                            <input type="text" class="form-control" id="ville" name="ville" required maxlength="100" />
+                        </div>
 
-                    <div class="form-group">
-                      <label for="type">Type de logement</label>
-                      <select class="form-control" id="type" name="type" required>
-                        <option value="">-- Choisissez un type --</option>
-                        <option value="Appartement">Appartement</option>
-                        <option value="Maison">Maison</option>
-                        <option value="Villa">Villa</option>
-                        <option value="Studio">Studio</option>
-                        <option value="Chambre">Chambre</option>
-                      </select>
-                    </div>
+                        <div class="form-group">
+                            <label for="type">Type de logement</label>
+                            <select class="form-control" id="type" name="type" required>
+                                <option value="">-- Choisissez un type --</option>
+                                <option value="Appartement">Appartement</option>
+                                <option value="Maison">Maison</option>
+                                <option value="Villa">Villa</option>
+                                <option value="Studio">Studio</option>
+                                <option value="Chambre">Chambre</option>
+                            </select>
+                        </div>
 
-                    <div class="form-group">
-                      <label for="prix_par_nuit">Prix par nuit (€)</label>
-                      <input type="number" class="form-control" id="prix_par_nuit" name="prix_par_nuit" min="1" step="0.01" required>
-                    </div>
+                        <div class="form-group">
+                            <label for="prix_par_nuit">Prix par nuit (€)</label>
+                            <input type="number" class="form-control" id="prix_par_nuit" name="prix_par_nuit" min="1" step="0.01" required />
+                        </div>
 
-                    <div class="form-group">
-                      <label for="capacite">Capacité (nombre de personnes)</label>
-                      <input type="number" class="form-control" id="capacite" name="capacite" min="1" required>
-                    </div>
+                        <div class="form-group">
+                            <label for="capacite">Capacité (nombre de personnes)</label>
+                            <input type="number" class="form-control" id="capacite" name="capacite" min="1" required />
+                        </div>
 
-                    <div class="form-group">
-                      <label for="image">Photo du logement</label>
-                      <input type="file" class="form-control" id="image" name="image" accept="image/*">
-                    </div>
+                        <div class="form-group">
+                            <label for="image">Photo du logement</label>
+                            <input type="file" class="form-control" id="image" name="image" accept="image/*" />
+                        </div>
 
-                    <div class="form-check mb-3">
-                      <input type="checkbox" class="form-check-input" id="disponibilite" name="disponibilite" checked>
-                      <label class="form-check-label" for="disponibilite">Disponible</label>
-                    </div>
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="disponibilite" name="disponibilite" checked />
+                            <label class="form-check-label" for="disponibilite">Disponible</label>
+                        </div>
 
-                    <button type="submit" class="btn btn-success btn-block mt-3">Ajouter</button>
-                  </form>
+                        <button type="submit" class="btn btn-success btn-block mt-3">Ajouter</button>
+                    </form>
+
+                    <script>
+                        document.getElementById("addLogementForm").addEventListener("submit", function(event) {
+                            let formValid = true;
+                            const titre = document.getElementById("titre");
+                            if (titre.value.length < 3 || titre.value.length > 100) {
+                                alert("Le titre doit avoir entre 3 et 100 caractères.");
+                                formValid = false;
+                            }
+                            const description = document.getElementById("description");
+                            if (description.value.length < 10 || description.value.length > 1000) {
+                                alert("La description doit avoir entre 10 et 1000 caractères.");
+                                formValid = false;
+                            }
+                            const prixParNuit = document.getElementById("prix_par_nuit");
+                            if (prixParNuit.value <= 0) {
+                                alert("Le prix par nuit doit être supérieur à 0.");
+                                formValid = false;
+                            }
+                            const capacite = document.getElementById("capacite");
+                            if (capacite.value <= 0) {
+                                alert("La capacité doit être supérieure à 0.");
+                                formValid = false;
+                            }
+                            if (!formValid) {
+                                event.preventDefault();
+                            }
+                        });
+                    </script>
+
+
 
                 </div>
               </div>

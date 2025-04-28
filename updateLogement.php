@@ -128,66 +128,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                   <h3 class="text-center mb-4 text-primary">Modifier un logement</h3>
 
-                  <form method="POST" enctype="multipart/form-data" class="form-section">
-                    <input type="hidden" name="id_logement" value="<?= $logement['id_logement'] ?>">
-                    <input type="hidden" name="existing_image" value="<?= $logement['image'] ?>">
+                    <form method="POST" enctype="multipart/form-data" class="form-section" id="updateLogementForm">
+                        <input type="hidden" name="id_logement" value="<?= $logement['id_logement'] ?>" />
+                        <input type="hidden" name="existing_image" value="<?= $logement['image'] ?>" />
 
-                    <div class="form-group">
-                      <label for="titre">Titre</label>
-                      <input type="text" class="form-control" name="titre" value="<?= htmlspecialchars($logement['titre']) ?>" required>
-                    </div>
+                        <div class="form-group">
+                            <label for="titre">Titre</label>
+                            <input type="text" class="form-control" name="titre" value="<?= htmlspecialchars($logement['titre']) ?>" required minlength="3" maxlength="100" />
+                        </div>
 
-                    <div class="form-group">
-                      <label for="description">Description</label>
-                      <textarea class="form-control" name="description" rows="4" required><?= htmlspecialchars($logement['description']) ?></textarea>
-                    </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea class="form-control" name="description" rows="4" required minlength="10" maxlength="1000"><?= htmlspecialchars($logement['description']) ?></textarea>
+                        </div>
 
-                    <div class="form-group">
-                      <label for="adresse">Adresse</label>
-                      <input type="text" class="form-control" name="adresse" value="<?= htmlspecialchars($logement['adresse']) ?>" required>
-                    </div>
+                        <div class="form-group">
+                            <label for="prix_par_nuit">Prix par nuit (€)</label>
+                            <input type="number" class="form-control" name="prix_par_nuit" min="1" step="0.01" value="<?= htmlspecialchars($logement['prix_par_nuit']) ?>" required />
+                        </div>
+                        <button type="submit" class="btn btn-warning btn-block mt-3">Modifier</button>
+                    </form>
 
-                    <div class="form-group">
-                      <label for="ville">Ville</label>
-                      <input type="text" class="form-control" name="ville" value="<?= htmlspecialchars($logement['ville']) ?>" required>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="type">Type de logement</label>
-                      <select class="form-control" name="type" required>
-                        <option value="Appartement" <?= ($logement['type'] == 'Appartement') ? 'selected' : '' ?>>Appartement</option>
-                        <option value="Maison" <?= ($logement['type'] == 'Maison') ? 'selected' : '' ?>>Maison</option>
-                        <option value="Villa" <?= ($logement['type'] == 'Villa') ? 'selected' : '' ?>>Villa</option>
-                        <option value="Studio" <?= ($logement['type'] == 'Studio') ? 'selected' : '' ?>>Studio</option>
-                        <option value="Chambre" <?= ($logement['type'] == 'Chambre') ? 'selected' : '' ?>>Chambre</option>
-                      </select>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="prix_par_nuit">Prix par nuit (€)</label>
-                      <input type="number" class="form-control" name="prix_par_nuit" min="1" step="0.01" value="<?= htmlspecialchars($logement['prix_par_nuit']) ?>" required>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="capacite">Capacité (nombre de personnes)</label>
-                      <input type="number" class="form-control" name="capacite" min="1" value="<?= htmlspecialchars($logement['capacite']) ?>" required>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="image">Photo du logement</label>
-                      <?php if ($logement['image']): ?>
-                        <p>Image actuelle: <img src="<?= $logement['image'] ?>" alt="Image actuelle" style="max-width: 100px;"></p>
-                      <?php endif; ?>
-                      <input type="file" class="form-control" name="image" accept="image/*">
-                    </div>
-
-                    <div class="form-check mb-3">
-                      <input type="checkbox" class="form-check-input" name="disponibilite" <?= $logement['disponibilite'] ? 'checked' : '' ?>>
-                      <label class="form-check-label" for="disponibilite">Disponible</label>
-                    </div>
-
-                    <button type="submit" class="btn btn-warning btn-block mt-3">Modifier</button>
-                  </form>
+                    <script>
+                        document.getElementById("updateLogementForm").addEventListener("submit", function(event) {
+                            let formValid = true;
+                        });
+                    </script>
 
                 </div>
               </div>

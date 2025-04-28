@@ -140,51 +140,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                   <?php endif; ?>
 
-                  <form method="POST" class="form-section">
-                    <input type="hidden" name="id_reservation" value="<?= $reservation['id_reservation'] ?>">
+                    <form method="POST" class="form-section" id="updateReservationForm">
+                        <input type="hidden" name="id_reservation" value="<?= $reservation['id_reservation'] ?>">
 
-                    <div class="form-group">
-                      <label for="id_logement">Logement</label>
-                      <select class="form-control" name="id_logement" required>
-                        <?php foreach ($logements as $logement): ?>
-                          <option value="<?= $logement['id_logement'] ?>" <?= ($logement['id_logement'] == $reservation['id_logement']) ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($logement['titre']) ?> - <?= htmlspecialchars($logement['ville']) ?>
-                          </option>
-                        <?php endforeach; ?>
-                      </select>
-                    </div>
+                        <div class="form-group">
+                            <label for="nom_client">Nom du client</label>
+                            <input type="text" class="form-control" name="nom_client" value="<?= htmlspecialchars($reservation['nom_client']) ?>" required minlength="3" maxlength="100" />
+                        </div>
 
-                    <div class="form-group">
-                      <label for="nom_client">Nom du client</label>
-                      <input type="text" class="form-control" name="nom_client" value="<?= htmlspecialchars($reservation['nom_client']) ?>" required>
-                    </div>
 
-                    <div class="form-group">
-                      <label for="email_client">Email du client</label>
-                      <input type="email" class="form-control" name="email_client" value="<?= htmlspecialchars($reservation['email_client']) ?>" required>
-                    </div>
+                        <button type="submit" class="btn btn-warning btn-block mt-3">Modifier</button>
+                    </form>
 
-                    <div class="form-group">
-                      <label for="date_debut">Date d'arrivée</label>
-                      <input type="date" class="form-control" name="date_debut" value="<?= htmlspecialchars($reservation['date_debut']) ?>" required>
-                    </div>
+                    <script>
+                        document.getElementById("updateReservationForm").addEventListener("submit", function(event) {
+                            let formValid = true;
+                        });
+                    </script>
 
-                    <div class="form-group">
-                      <label for="date_fin">Date de départ</label>
-                      <input type="date" class="form-control" name="date_fin" value="<?= htmlspecialchars($reservation['date_fin']) ?>" required>
-                    </div>
 
-                    <div class="form-group">
-                      <label for="statut">Statut</label>
-                      <select class="form-control" name="statut" required>
-                        <option value="en attente" <?= ($reservation['statut'] == 'en attente') ? 'selected' : '' ?>>En attente</option>
-                        <option value="confirmée" <?= ($reservation['statut'] == 'confirmée') ? 'selected' : '' ?>>Confirmée</option>
-                        <option value="annulée" <?= ($reservation['statut'] == 'annulée') ? 'selected' : '' ?>>Annulée</option>
-                      </select>
-                    </div>
-
-                    <button type="submit" class="btn btn-warning btn-block mt-3">Modifier</button>
-                  </form>
 
                 </div>
               </div>

@@ -144,16 +144,14 @@ $liste = $reservationController->listReservations();
                             ?>
                             <span class="badge <?= $badgeClass ?>"><?= htmlspecialchars($reservation['statut']) ?></span>
                           </td>
-                          <td>
-                            <a href="updateReservation.php?id=<?= $reservation['id_reservation'] ?>" class="btn btn-primary btn-sm">✏️ Modifier</a>
-                            <a href="deleteReservation.php?id=<?= $reservation['id_reservation'] ?>" onclick="return confirm('Supprimer cette réservation ?')" class="btn btn-danger btn-sm">🗑️ Supprimer</a>
-                            
-                            <!-- Boutons pour changer rapidement le statut -->
-                            <div class="btn-group mt-2">
-                              <a href="changeStatus.php?id=<?= $reservation['id_reservation'] ?>&statut=confirmée" class="btn btn-success btn-sm">✓ Confirmer</a>
-                              <a href="changeStatus.php?id=<?= $reservation['id_reservation'] ?>&statut=annulée" class="btn btn-danger btn-sm">✗ Annuler</a>
-                            </div>
-                          </td>
+                            <td>
+                                <a href="updateReservation.php?id=<?= $reservation['id_reservation'] ?>" class="btn btn-primary btn-sm">✏️ Modifier</a>
+                                <a href="deleteReservations.php?id=<?= $reservation['id_reservation'] ?>" onclick="return confirm('Supprimer cette réservation ?')" class="btn btn-danger btn-sm">🗑️ Supprimer</a>
+                                <div class="btn-group mt-2">
+                                    <a href="changeStatus.php?id=<?= $reservation['id_reservation'] ?>&statut=confirmée" class="btn btn-success btn-sm">✓ Confirmer</a>
+                                    <a href="changeStatus.php?id=<?= $reservation['id_reservation'] ?>&statut=annulée" class="btn btn-danger btn-sm">✗ Annuler</a>
+                                </div>
+                            </td>
                         </tr>
                       <?php endforeach; ?>
                     </tbody>

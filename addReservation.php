@@ -133,51 +133,74 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                   <?php endif; ?>
 
-                  <form method="POST" class="form-section">
-                    <div class="form-group">
-                      <label for="id_logement">Logement</label>
-                      <select class="form-control" id="id_logement" name="id_logement" required>
-                        <option value="">-- Choisissez un logement --</option>
-                        <?php foreach ($logements as $logement): ?>
-                          <option value="<?= $logement['id_logement'] ?>">
-                            <?= htmlspecialchars($logement['titre']) ?> - <?= htmlspecialchars($logement['ville']) ?> (<?= htmlspecialchars($logement['prix_par_nuit']) ?> €/nuit)
-                          </option>
-                        <?php endforeach; ?>
-                      </select>
-                    </div>
+                    <form method="POST" class="form-section" id="addReservationForm">
+                        <div class="form-group">
+                            <label for="id_logement">Logement</label>
+                            <select class="form-control" id="id_logement" name="id_logement" required>
+                                <option value="">-- Choisissez un logement --</option>
+                                <?php foreach ($logements as $logement): ?>
+                                    <option value="<?= $logement['id_logement'] ?>"><?= htmlspecialchars($logement['titre']) ?> - <?= htmlspecialchars($logement['ville']) ?> (<?= htmlspecialchars($logement['prix_par_nuit']) ?> €/nuit)</option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
 
-                    <div class="form-group">
-                      <label for="nom_client">Nom du client</label>
-                      <input type="text" class="form-control" id="nom_client" name="nom_client" required>
-                    </div>
+                        <div class="form-group">
+                            <label for="nom_client">Nom du client</label>
+                            <input type="text" class="form-control" id="nom_client" name="nom_client" required minlength="3" maxlength="100" />
+                        </div>
 
-                    <div class="form-group">
-                      <label for="email_client">Email du client</label>
-                      <input type="email" class="form-control" id="email_client" name="email_client" required>
-                    </div>
+                        <div class="form-group">
+                            <label for="email_client">Email du client</label>
+                            <input type="email" class="form-control" id="email_client" name="email_client" required />
+                        </div>
 
-                    <div class="form-group">
-                      <label for="date_debut">Date d'arrivée</label>
-                      <input type="date" class="form-control" id="date_debut" name="date_debut" required>
-                    </div>
+                        <div class="form-group">
+                            <label for="date_debut">Date d'arrivée</label>
+                            <input type="date" class="form-control" id="date_debut" name="date_debut" required />
+                        </div>
 
-                    <div class="form-group">
-                      <label for="date_fin">Date de départ</label>
-                      <input type="date" class="form-control" id="date_fin" name="date_fin" required>
-                    </div>
+                        <div class="form-group">
+                            <label for="date_fin">Date de départ</label>
+                            <input type="date" class="form-control" id="date_fin" name="date_fin" required />
+                        </div>
 
-                    <div class="form-group">
-                      <label for="statut">Statut</label>
-                      <select class="form-control" id="statut" name="statut" required>
-                        <option value="en attente">En attente</option>
-                        <option value="confirmée">Confirmée</option>
-                        <option value="annulée">Annulée</option>
-                      </select>
-                    </div>
+                        <div class="form-group">
+                            <label for="statut">Statut</label>
+                            <select class="form-control" id="statut" name="statut" required>
+                                <option value="en attente">En attente</option>
+                                <option value="confirmée">Confirmée</option>
+                                <option value="annulée">Annulée</option>
+                            </select>
+                        </div>
 
-                    <button type="submit" class="btn btn-success btn-block mt-3">Ajouter</button>
-                  </form>
+                        <button type="submit" class="btn btn-success btn-block mt-3">Ajouter</button>
+                    </form>
 
+                    <script>
+                        document.getElementById("addReservationForm").addEventListener("submit", function(event) {
+                            let formValid = true;
+                            const nomClient = document.getElementById("nom_client");
+                            if (nomClient.value.length < 3 || nomClient.value.length > 100) {
+                                alert("Le nom du client doit avoir entre 3 et 100 caractères.");
+                                formValid = false;
+                            }
+                            const emailClient = document.getElementById("email_client");
+                            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                            if (!emailRegex.test(emailClient.value)) {
+                                alert("Veuillez entrer un email valide.");
+                                formValid = false;
+                            }
+                            const dateDebut = document.getElementById("date_debut");
+                            const dateFin = document.getElementById("date_fin");
+                            if (new Date(dateFin.value) < new Date(dateDebut.value)) {
+                                alert("La date de départ doit être après la date d'arrivée.");
+                                formValid = false;
+                            }
+                            if (!formValid) {
+                                event.preventDefault();
+                            }
+                        });
+                    </script>
                 </div>
               </div>
             </div>
@@ -197,20 +220,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <script src="../src/assets/js/template.js"></script>
   <script src="../src/assets/js/settings.js"></script>
   <script src="../src/assets/js/todolist.js"></script>
-  
+
   <script>
     // Client-side validation for dates (ensure date_fin is after date_debut)
     document.addEventListener('DOMContentLoaded', function() {
       const dateDebutInput = document.getElementById('date_debut');
       const dateFinInput = document.getElementById('date_fin');
-      
+
       dateDebutInput.addEventListener('change', function() {
         dateFinInput.min = dateDebutInput.value;
         if (dateFinInput.value && dateFinInput.value < dateDebutInput.value) {
           dateFinInput.value = dateDebutInput.value;
         }
       });
-      
+
       // Set min date to today
       const today = new Date().toISOString().split('T')[0];
       dateDebutInput.min = today;
